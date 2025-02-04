@@ -87,7 +87,6 @@ with tabs[3]:
     """)
     # Example of a 0-D tensor (scalar)
     scalar = torch.tensor(5)
-    # 1-D tensor (vector) and 2-D tensor (matrix) already shown above.
     st.write("Scalar (0-D Tensor):", scalar)
     st.code("""
 scalar = torch.tensor(5)
@@ -122,8 +121,9 @@ with tabs[5]:
     st.markdown("""
     Tensor operators perform element-wise operations such as addition, subtraction, etc.
     """)
-    a = torch.tensor([1, 2, 3])
-    b = torch.tensor([4, 5, 6])
+    # Define a and b as float tensors for consistency in later operations.
+    a = torch.tensor([1, 2, 3], dtype=torch.float)
+    b = torch.tensor([4, 5, 6], dtype=torch.float)
     sum_tensor = a + b
     product_tensor = a * b
     st.write("Tensor a:", a)
@@ -131,8 +131,8 @@ with tabs[5]:
     st.write("a + b:", sum_tensor)
     st.write("a * b:", product_tensor)
     st.code("""
-a = torch.tensor([1, 2, 3])
-b = torch.tensor([4, 5, 6])
+a = torch.tensor([1, 2, 3], dtype=torch.float)
+b = torch.tensor([4, 5, 6], dtype=torch.float)
 sum_tensor = a + b      # Element-wise addition
 product_tensor = a * b  # Element-wise multiplication
 """, language="python")
@@ -200,10 +200,11 @@ with tabs[9]:
     **Norms** measure the size of a tensor.  
     The L2 norm (Euclidean norm) is commonly used.
     """)
+    # Convert 'a' to float (if it wasn't already) to ensure proper computation.
     l2_norm = torch.norm(a, p=2)
     st.write("L2 Norm of a:", l2_norm)
     st.code("""
-l2_norm = torch.norm(a, p=2)
+l2_norm = torch.norm(a, p=2)  # Ensure 'a' is a float tensor
 """, language="python")
 
 # ----------------------------------------------------------------------
@@ -212,9 +213,9 @@ with tabs[10]:
     st.header("11. Broadcasting")
     st.markdown("""
     **Broadcasting** automatically expands the dimensions of tensors during operations.  
-    For example, adding a scalar to a tensor.
+    For example, adding a scalar to every element of a tensor.
     """)
-    broadcast_example = tensor + 1  # Adds 1 to every element
+    broadcast_example = tensor + 1  # Adds 1 to every element of 'tensor'
     st.write("Tensor + 1:", broadcast_example)
     st.code("""
 broadcast_example = tensor + 1
@@ -241,8 +242,8 @@ with tabs[12]:
     st.markdown("""
     In-place operations modify tensors without creating new ones, saving memory.
     """)
-    tensor_for_memory = tensor.clone()  # clone to preserve original
-    tensor_for_memory.add_(2)  # in-place addition: add 2 to each element
+    tensor_for_memory = tensor.clone()  # Clone to preserve the original tensor
+    tensor_for_memory.add_(2)  # In-place addition: add 2 to each element
     st.write("Tensor after in-place addition (tensor.add_(2)):", tensor_for_memory)
     st.code("""
 tensor_for_memory = tensor.clone()
