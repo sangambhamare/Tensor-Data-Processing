@@ -3,11 +3,12 @@ import torch
 import numpy as np
 import matplotlib.pyplot as plt
 
-st.set_page_config(page_title="Tensor Data Processing", layout="wide")
-st.title("Tensor Data Processing Teaching App")
+# Configure the page
+st.set_page_config(page_title="Tensor Data Processing: All Topics", layout="wide")
+st.title("Tensor Data Processing: Simple Examples for All Topics")
 
 # Create tabs for each topic
-tabs = st.tabs([
+tab_names = [
     "1. Data Manipulation",
     "2. Vector",
     "3. Matrices",
@@ -22,136 +23,113 @@ tabs = st.tabs([
     "12. Indexing & Slicing",
     "13. Saving Memory",
     "14. Converting Tensors"
-])
+]
+tabs = st.tabs(tab_names)
 
-# -----------------------------------------------
+# ----------------------------------------------------------------------
 # 1. Data Manipulation
 with tabs[0]:
     st.header("1. Data Manipulation")
     st.markdown("""
-    **What It Is:**  
-    Data manipulation involves transforming, reshaping, or modifying data so that it can be used effectively.
+    **Data Manipulation** involves changing or transforming data.  
+    Here, we create a random tensor and normalize it between 0 and 1.
     """)
-    
-    st.markdown("**Example:** Creating a tensor and normalizing it between 0 and 1.")
-    # Create a random tensor
-    tensor = torch.randn(10, 10)
-    st.write("Original Tensor:", tensor)
-    
-    # Normalize the tensor
+    # Simple example: create a 3x3 tensor and normalize it.
+    tensor = torch.randn(3, 3)
     tensor_min = torch.min(tensor)
     tensor_max = torch.max(tensor)
     tensor_normalized = (tensor - tensor_min) / (tensor_max - tensor_min)
+    st.write("Original Tensor:", tensor)
     st.write("Normalized Tensor:", tensor_normalized)
-    
     st.code("""
-# Create a random tensor
-tensor = torch.randn(10, 10)
-# Normalize the tensor between 0 and 1
+tensor = torch.randn(3, 3)
 tensor_min = torch.min(tensor)
 tensor_max = torch.max(tensor)
 tensor_normalized = (tensor - tensor_min) / (tensor_max - tensor_min)
 """, language="python")
 
-# -----------------------------------------------
+# ----------------------------------------------------------------------
 # 2. Vector
 with tabs[1]:
     st.header("2. Vector")
     st.markdown("""
-    **What It Is:**  
-    A vector is a 1-dimensional tensor, essentially a list of numbers.
+    A **vector** is a 1-dimensional tensor (a list of numbers).
     """)
-    
-    vector = torch.tensor([1.0, 2.0, 3.0])
-    st.write("Vector:", vector)
-    
+    simple_vector = torch.tensor([1, 2, 3, 4])
+    st.write("Vector:", simple_vector)
     st.code("""
-# Create a vector (1-D tensor)
-vector = torch.tensor([1.0, 2.0, 3.0])
+simple_vector = torch.tensor([1, 2, 3, 4])
 """, language="python")
 
-# -----------------------------------------------
+# ----------------------------------------------------------------------
 # 3. Matrices
 with tabs[2]:
     st.header("3. Matrices")
     st.markdown("""
-    **What It Is:**  
-    A matrix is a 2-dimensional tensor, similar to a table or grid of numbers.
+    A **matrix** is a 2-dimensional tensor (a table of numbers).
     """)
-    
-    matrix = torch.tensor([[1, 2, 3], [4, 5, 6]])
-    st.write("Matrix:", matrix)
-    
+    simple_matrix = torch.tensor([[1, 2], [3, 4]])
+    st.write("Matrix:", simple_matrix)
     st.code("""
-# Create a matrix (2-D tensor)
-matrix = torch.tensor([[1, 2, 3], [4, 5, 6]])
+simple_matrix = torch.tensor([[1, 2],
+                              [3, 4]])
 """, language="python")
 
-# -----------------------------------------------
+# ----------------------------------------------------------------------
 # 4. Tensors
 with tabs[3]:
     st.header("4. Tensors")
     st.markdown("""
-    **What It Is:**  
-    A tensor is a generalization of scalars, vectors, and matrices to higher dimensions.
+    A **tensor** is a multi-dimensional array.  
     - A scalar is a 0-D tensor.
     - A vector is a 1-D tensor.
     - A matrix is a 2-D tensor.
-    - Higher-dimensional tensors (e.g., 3-D, 4-D) are used for more complex data.
     """)
-    
-    tensor_3d = torch.randn(3, 4, 5)
-    st.write("Example of a 3-D Tensor:", tensor_3d)
-    
+    # Example of a 0-D tensor (scalar)
+    scalar = torch.tensor(5)
+    # 1-D tensor (vector) and 2-D tensor (matrix) already shown above.
+    st.write("Scalar (0-D Tensor):", scalar)
     st.code("""
-# Create a 3-D tensor
-tensor_3d = torch.randn(3, 4, 5)
+scalar = torch.tensor(5)
 """, language="python")
 
-# -----------------------------------------------
-# 5. Commonly-used Tensor Constructors
+# ----------------------------------------------------------------------
+# 5. Common Tensor Constructors
 with tabs[4]:
-    st.header("5. Commonly-used Tensor Constructors")
+    st.header("5. Tensor Constructors")
     st.markdown("""
-    **What They Are:**  
-    Functions to create tensors such as:
-    - `torch.zeros(shape)`: Tensor filled with zeros.
-    - `torch.ones(shape)`: Tensor filled with ones.
-    - `torch.randn(shape)`: Tensor with random numbers from a normal distribution.
-    - `torch.arange(start, end)`: Tensor with a range of numbers.
+    Common tensor constructors include:
+    - `torch.zeros()`: Tensor of zeros.
+    - `torch.ones()`: Tensor of ones.
+    - `torch.randn()`: Tensor with random numbers.
     """)
-    
-    zeros_tensor = torch.zeros(3, 3)
-    ones_tensor = torch.ones(3, 3)
-    rand_tensor = torch.randn(3, 3)
+    zeros_tensor = torch.zeros(2, 2)
+    ones_tensor = torch.ones(2, 2)
+    rand_tensor = torch.randn(2, 2)
     st.write("Zeros Tensor:", zeros_tensor)
     st.write("Ones Tensor:", ones_tensor)
     st.write("Random Tensor:", rand_tensor)
-    
     st.code("""
-zeros_tensor = torch.zeros(3, 3)
-ones_tensor = torch.ones(3, 3)
-rand_tensor = torch.randn(3, 3)
+zeros_tensor = torch.zeros(2, 2)
+ones_tensor  = torch.ones(2, 2)
+rand_tensor  = torch.randn(2, 2)
 """, language="python")
 
-# -----------------------------------------------
+# ----------------------------------------------------------------------
 # 6. Common Tensor Operators
 with tabs[5]:
-    st.header("6. Common Tensor Operators")
+    st.header("6. Tensor Operators")
     st.markdown("""
-    **What They Are:**  
-    Element-wise operations such as addition, subtraction, multiplication, and division.
+    Tensor operators perform element-wise operations such as addition, subtraction, etc.
     """)
-    
     a = torch.tensor([1, 2, 3])
     b = torch.tensor([4, 5, 6])
     sum_tensor = a + b
     product_tensor = a * b
     st.write("Tensor a:", a)
     st.write("Tensor b:", b)
-    st.write("Sum (a + b):", sum_tensor)
-    st.write("Product (a * b):", product_tensor)
-    
+    st.write("a + b:", sum_tensor)
+    st.write("a * b:", product_tensor)
     st.code("""
 a = torch.tensor([1, 2, 3])
 b = torch.tensor([4, 5, 6])
@@ -159,158 +137,137 @@ sum_tensor = a + b      # Element-wise addition
 product_tensor = a * b  # Element-wise multiplication
 """, language="python")
 
-# -----------------------------------------------
+# ----------------------------------------------------------------------
 # 7. Dot Product
 with tabs[6]:
     st.header("7. Dot Product")
     st.markdown("""
-    **What It Is:**  
-    The dot product takes two equal-length vectors and returns a single number—a measure of their similarity.
+    The **dot product** multiplies two vectors and sums the results.
     """)
-    
     dot_product = torch.dot(a, b)
-    st.write("Dot Product of a and b:", dot_product)
-    
+    st.write("Dot product of a and b:", dot_product)
     st.code("""
 dot_product = torch.dot(a, b)
 """, language="python")
 
-# -----------------------------------------------
+# ----------------------------------------------------------------------
 # 8. Matrix-Vector Multiplication
 with tabs[7]:
     st.header("8. Matrix-Vector Multiplication")
     st.markdown("""
-    **What It Is:**  
-    Multiplying a matrix by a vector. Often used in linear transformations.
+    Multiply a matrix by a vector.
     """)
-    
-    # Create a matrix (2x3) and a vector (3 elements)
     matrix_mv = torch.tensor([[1, 2, 3], [4, 5, 6]], dtype=torch.float)
     vector_mv = torch.tensor([1, 0, -1], dtype=torch.float)
     result_mv = torch.mv(matrix_mv, vector_mv)
     st.write("Matrix:", matrix_mv)
     st.write("Vector:", vector_mv)
-    st.write("Matrix-Vector Multiplication Result:", result_mv)
-    
+    st.write("Matrix-Vector Result:", result_mv)
     st.code("""
-matrix = torch.tensor([[1, 2, 3], [4, 5, 6]], dtype=torch.float)
+matrix = torch.tensor([[1, 2, 3],
+                       [4, 5, 6]], dtype=torch.float)
 vector = torch.tensor([1, 0, -1], dtype=torch.float)
 result = torch.mv(matrix, vector)
 """, language="python")
 
-# -----------------------------------------------
+# ----------------------------------------------------------------------
 # 9. Matrix Multiplication
 with tabs[8]:
     st.header("9. Matrix Multiplication")
     st.markdown("""
-    **What It Is:**  
-    Multiplying two matrices. The number of columns in the first must match the number of rows in the second.
+    Multiply two matrices.  
+    Note: The number of columns in the first must equal the number of rows in the second.
     """)
-    
     matrix_a = torch.tensor([[1, 2], [3, 4]], dtype=torch.float)
     matrix_b = torch.tensor([[5, 6], [7, 8]], dtype=torch.float)
-    matrix_product = matrix_a @ matrix_b  # or torch.matmul(matrix_a, matrix_b)
+    matrix_product = matrix_a @ matrix_b
     st.write("Matrix A:", matrix_a)
     st.write("Matrix B:", matrix_b)
-    st.write("Matrix Multiplication (A @ B):", matrix_product)
-    
+    st.write("A @ B:", matrix_product)
     st.code("""
-matrix_a = torch.tensor([[1, 2], [3, 4]], dtype=torch.float)
-matrix_b = torch.tensor([[5, 6], [7, 8]], dtype=torch.float)
+matrix_a = torch.tensor([[1, 2],
+                         [3, 4]], dtype=torch.float)
+matrix_b = torch.tensor([[5, 6],
+                         [7, 8]], dtype=torch.float)
 matrix_product = matrix_a @ matrix_b
 """, language="python")
 
-# -----------------------------------------------
+# ----------------------------------------------------------------------
 # 10. Norms
 with tabs[9]:
     st.header("10. Norms")
     st.markdown("""
-    **What They Are:**  
-    Norms measure the “length” or “size” of vectors and tensors. The L2 norm (Euclidean norm) is very common.
+    **Norms** measure the size of a tensor.  
+    The L2 norm (Euclidean norm) is commonly used.
     """)
-    
     l2_norm = torch.norm(a, p=2)
-    st.write("L2 Norm of vector a:", l2_norm)
-    
+    st.write("L2 Norm of a:", l2_norm)
     st.code("""
 l2_norm = torch.norm(a, p=2)
 """, language="python")
 
-# -----------------------------------------------
+# ----------------------------------------------------------------------
 # 11. Broadcasting Mechanism
 with tabs[10]:
-    st.header("11. Broadcasting Mechanism")
+    st.header("11. Broadcasting")
     st.markdown("""
-    **What It Is:**  
-    Broadcasting allows operations on tensors of different shapes by automatically expanding smaller tensors.
+    **Broadcasting** automatically expands the dimensions of tensors during operations.  
+    For example, adding a scalar to a tensor.
     """)
-    
-    broadcast_example = tensor_normalized + 0.5
-    st.write("Tensor after Broadcasting Addition (tensor_normalized + 0.5):", broadcast_example)
-    
+    broadcast_example = tensor + 1  # Adds 1 to every element
+    st.write("Tensor + 1:", broadcast_example)
     st.code("""
-broadcast_example = tensor_normalized + 0.5
+broadcast_example = tensor + 1
 """, language="python")
 
-# -----------------------------------------------
+# ----------------------------------------------------------------------
 # 12. Tensor Indexing and Slicing
 with tabs[11]:
-    st.header("12. Tensor Indexing and Slicing")
+    st.header("12. Indexing & Slicing")
     st.markdown("""
-    **What It Is:**  
-    Extracting or modifying parts of a tensor by indexing and slicing.
+    **Indexing and slicing** allow you to extract parts of a tensor.
     """)
-    
-    sub_tensor = tensor_normalized[:5, :5]
-    st.write("Sliced Tensor (first 5 rows and columns):", sub_tensor)
-    
+    # For simplicity, use the previously created normalized tensor (3x3)
+    sub_tensor = tensor_normalized[:2, :2]
+    st.write("Sliced Tensor (first 2 rows and columns):", sub_tensor)
     st.code("""
-sub_tensor = tensor_normalized[:5, :5]
+sub_tensor = tensor_normalized[:2, :2]
 """, language="python")
 
-# -----------------------------------------------
+# ----------------------------------------------------------------------
 # 13. Saving Memory
 with tabs[12]:
     st.header("13. Saving Memory")
     st.markdown("""
-    **What It Is:**  
-    Using memory-saving techniques like in-place operations (operations that modify data without creating a new tensor).  
-    In PyTorch, in-place operations have an underscore suffix (e.g., `add_()`).
+    In-place operations modify tensors without creating new ones, saving memory.
     """)
-    
-    # In-place addition: adds 1 to every element without creating a new tensor
-    tensor_copy = tensor.clone()  # create a clone to preserve the original tensor for display
-    tensor_copy.add_(1)
-    st.write("Tensor after in-place addition (tensor.add_(1)):", tensor_copy)
-    
+    tensor_for_memory = tensor.clone()  # clone to preserve original
+    tensor_for_memory.add_(2)  # in-place addition: add 2 to each element
+    st.write("Tensor after in-place addition (tensor.add_(2)):", tensor_for_memory)
     st.code("""
-# In-place operation example:
-tensor.add_(1)
+tensor_for_memory = tensor.clone()
+tensor_for_memory.add_(2)  # In-place addition
 """, language="python")
 
-# -----------------------------------------------
+# ----------------------------------------------------------------------
 # 14. Converting Tensors to Other Objects
 with tabs[13]:
-    st.header("14. Converting Tensors to Other Objects")
+    st.header("14. Converting Tensors")
     st.markdown("""
-    **What It Is:**  
-    Converting tensors to other formats (e.g., NumPy arrays) is often necessary for visualization or interoperability with other libraries.
+    You can convert tensors to other objects, like NumPy arrays, for further use (e.g., plotting).
     """)
-    
     tensor_np = tensor_normalized.numpy()
     st.write("Tensor converted to a NumPy array:", tensor_np)
     
-    # Show a simple visualization using matplotlib
+    # Simple visualization using matplotlib
     fig, ax = plt.subplots()
     cax = ax.matshow(tensor_np, cmap='viridis')
     fig.colorbar(cax)
     st.pyplot(fig)
     
     st.code("""
-# Convert a tensor to a NumPy array for visualization:
 tensor_np = tensor_normalized.numpy()
 """, language="python")
 
 st.markdown("---")
-st.markdown("This app demonstrates various tensor operations using PyTorch, with interactive examples organized in separate tabs. Each tab provides a simple explanation along with example code, so you can see how these concepts are implemented in practice.")
-
+st.markdown("This app demonstrates simple examples of tensor operations using PyTorch. Each tab covers one topic with minimal code to help you understand the fundamentals. Enjoy exploring tensors!")
